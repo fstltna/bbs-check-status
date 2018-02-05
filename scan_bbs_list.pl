@@ -11,6 +11,7 @@ use DBI;
 # No changes below here
 my $CurHost="";
 my $CurPort=0;
+my $CurId=0;
 my $timeout=5;
 my $VERSION="0.1a";
 my $UpOrDown="";
@@ -18,6 +19,17 @@ my $DB_Owner="root";
 my $DB_Pswd="wssx34x!";
 my $DB_Name="joomla";
 my $DB_Prefix="slm86_";
+
+my $CONF_FILE="/root/bbs-check-status/config.ini";
+
+open(CONF, "<$CONF_FILE") || die("Unable to read config file '$CONF_FILE'");
+while(<CONF>)
+{
+	chop;
+	my ($FIELD_TYPE, $FIELD_VALUE) = split (/	/, $_);
+	print("Type is $FIELD_TYPE\n");
+}
+close(CONF);
 
 # Marks the BBS state and check time
 sub MarkBBS
@@ -39,33 +51,8 @@ sub CheckBBS
 	MarkBBS();
 }
 
-sub table_exists {
-    my $db = shift;
-    my $table = shift;
-    my @tables = $db->tables('','','','TABLE');
-    if (@tables) {
-        for (@tables) {
-            next unless $_;
-            return 1 if $_ eq $table
-        }
-    }
-    else {
-        eval {
-            local $db->{PrintError} = 0;
-            local $db->{RaiseError} = 1;
-            $db->do(qq{SELECT * FROM $table WHERE 1 = 0 });
-        };
-        return 1 unless $@;
-    }
-    return 0;
-}
-
 print("BBS Check Status ($VERSION)\n");
 print("=============================\n");
-
-$CurHost="amigacity.xyz";
-$CurPort=23;
-CheckBBS();
 
 ### The database handle
 my $dbh = DBI->connect ("DBI:mysql:database=$DB_Name:host=localhost",
@@ -73,25 +60,23 @@ my $dbh = DBI->connect ("DBI:mysql:database=$DB_Name:host=localhost",
                            $DB_Pswd) 
                            or die "Can't connect to database: $DBI::errstr\n";
 
-print("Database opened successfully\n");
-
 my $DB_Table = $DB_Prefix . "jvld_links";
 
-print ("Table is '$DB_Table'\n");
-
-if (table_exists($dbh, $DB_Table))
-{
-    print "it's there!\n";
-}
-else
-{
-    print "table not found!\n";
-#	exit(1);
-}
+#print ("Table is '$DB_Table'\n");
 
 ### The statement handle
 my $sth = $dbh->prepare("SELECT id, partner_url, field1, field2 FROM $DB_Table");
+
+$sth->execute or die $dbh->errstr;
+
 my $rows_found = $sth->rows;
-print ("Saw $rows_found rows\n");
+
+while (my $row = $sth->fetchrow_hashref)
+{
+	$CurId = $row->{'id'};
+	$CurHost = $row->{'field1'};
+	$CurPort = $row->{'field2'};
+	CheckBBS();
+}
 
 exit(0);
