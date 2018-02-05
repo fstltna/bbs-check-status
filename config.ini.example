@@ -1,3 +1,4 @@
 DB_User	root
 DB_Pswd	foobar
 DB_DBName	joomla
+DB_DBtblpfx	zzz
