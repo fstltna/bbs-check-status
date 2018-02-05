@@ -15,10 +15,10 @@ my $CurId=0;
 my $timeout=5;
 my $VERSION="0.1a";
 my $UpOrDown="";
-my $DB_Owner="root";
-my $DB_Pswd="wssx34x!";
-my $DB_Name="joomla";
-my $DB_Prefix="slm86_";
+my $DB_Owner="";
+my $DB_Pswd="";
+my $DB_Name="";
+my $DB_Prefix="";
 
 my $CONF_FILE="/root/bbs-check-status/config.ini";
 
@@ -27,7 +27,23 @@ while(<CONF>)
 {
 	chop;
 	my ($FIELD_TYPE, $FIELD_VALUE) = split (/	/, $_);
-	print("Type is $FIELD_TYPE\n");
+	#print("Type is $FIELD_TYPE\n");
+	if ($FIELD_TYPE eq "DB_User")
+	{
+		$DB_Owner = $FIELD_VALUE;
+	}
+	elsif ($FIELD_TYPE eq "DB_Pswd")
+	{
+		$DB_Pswd = $FIELD_VALUE;
+	}
+	elsif ($FIELD_TYPE eq "DB_DBName")
+	{
+		$DB_Name = $FIELD_VALUE;
+	}
+	elsif ($FIELD_TYPE eq "DB_DBtblpfx")
+	{
+		$DB_Prefix = $FIELD_VALUE;
+	}
 }
 close(CONF);
 
