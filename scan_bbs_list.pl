@@ -73,8 +73,7 @@ my $dbh = DBI->connect ("DBI:mysql:database=$DB_Name:host=localhost",
                            $DB_Pswd) 
                            or die "Can't connect to database: $DBI::errstr\n";
 
-
-if (table_exists($dbh, $DB_Prefix . "jvld_links")
+if (table_exists($dbh, $DB_Prefix . "jvld_links"))
 {
     print "it's there!\n";
 }
