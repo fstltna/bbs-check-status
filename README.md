@@ -7,12 +7,13 @@ Official support sites: [Official Github Repo](https://github.com/fstltna/bbs-ch
 
 1. Copy **config.ini.example** to **config.ini** and edit it for your settings. If you don't know what your table prefix is you can use the following commands to see what it is. The prefix MUST end with a "_".
 
-        **mysql -p
+        mysql -p
         use joomla;
         show tables;
-        quit;**
+        quit;
 
         The prefix is what appears at the start of every field in that list.
+
 2. Use CPAN to install the following Perl modules:
 
         **IO::Socket::PortState, DBI**
