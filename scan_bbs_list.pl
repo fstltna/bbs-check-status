@@ -79,12 +79,13 @@ sub CheckBBS
 
 	my $host_hr = check_ports($CurHost, $timeout, \%port_hash);
 	$CurStatus = $host_hr->{tcp}{$CurPort}{open} ? "Active" : "Unreachable";
-	print "$CurHost : $CurPort - $CurStatus\n";
+	my $HostTable = sprintf("%-30s : %-5s : %s", $CurHost, $CurPort, $CurStatus);
+	print "$HostTable\n";
 	MarkBBS();
 }
 
 print("BBS Check Status ($VERSION)\n");
-print("=============================\n");
+print("===============================================\n");
 
 ### The database handle
 $dbh = DBI->connect ("DBI:mysql:database=$DB_Name:host=localhost",
