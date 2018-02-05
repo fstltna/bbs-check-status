@@ -15,5 +15,5 @@ Official support sites: [Official Github Repo](https://github.com/fstltna/bbs-ch
         DBI**
 3. Create the following extra fields in the JV-LD backend configuration as described in the file **JV-LD_ExtraFields.txt**
 4. Create a cron job to run several times per day like this:
-        **1 \*/6 * * * /root/bbs-check-status/scan-bbs-list.pl**
+        **1 \*/6 * * * /root/bbs-check-status/scan_bbs_list.pl**
 5. That should be enough, it should be workable now.
