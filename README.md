@@ -16,9 +16,10 @@ Official support sites: [Official Github Repo](https://github.com/fstltna/bbs-ch
 
 2. Use CPAN to install the following Perl modules:
 
-        **IO::Socket::PortState, DBI**
+        IO::Socket::PortState
+        DBI
 
-3. Create the following extra fields in the JV-LD backend configuration as described in the file **JV-LD_ExtraFields.txt**
+3. Create the required extra fields in the JV-LD backend configuration as described in the file **JV-LD_ExtraFields.txt**
 4. Create a cron job to run several times per day like this:
 
         1 */6 * * * /root/bbs-check-status/scan_bbs_list.pl
