@@ -73,18 +73,25 @@ my $dbh = DBI->connect ("DBI:mysql:database=$DB_Name:host=localhost",
                            $DB_Pswd) 
                            or die "Can't connect to database: $DBI::errstr\n";
 
-if (table_exists($dbh, $DB_Prefix . "jvld_links"))
+print("Database opened successfully\n");
+
+my $DB_Table = $DB_Prefix . "jvld_links";
+
+print ("Table is '$DB_Table'\n");
+
+if (table_exists($dbh, $DB_Table))
 {
     print "it's there!\n";
 }
 else
 {
     print "table not found!\n";
-	exit(1);
+#	exit(1);
 }
 
 ### The statement handle
-my $sth = $dbh->prepare( "SELECT id, name FROM megaliths" );
-
+my $sth = $dbh->prepare("SELECT id, partner_url, field1, field2 FROM $DB_Table");
+my $rows_found = $sth->rows;
+print ("Saw $rows_found rows\n");
 
 exit(0);
