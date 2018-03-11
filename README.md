@@ -18,6 +18,10 @@ Official support sites: [Official Github Repo](https://github.com/fstltna/bbs-ch
 
         IO::Socket::PortState
         DBI
+        Email::Simple
+        Email::Simple::Creator
+        Email::Sender::Simple qw(sendmail)
+
 
 3. Create the required extra fields in the JV-LD backend configuration as described in the file **JV-LD_ExtraFields.txt**
 4. Create a cron job to run several times per day like this:
