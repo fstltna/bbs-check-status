@@ -28,6 +28,7 @@ my $CONF_FILE="/root/bbs-check-status/config.ini";
 my $EMAIL_SUBJ="";
 my $EMAIL_FROM="";
 my $CurNotify="";
+my $email="";
 
 # Read in configuration options
 open(CONF, "<$CONF_FILE") || die("Unable to read config file '$CONF_FILE'");
@@ -103,12 +104,12 @@ Next check will be in roughly 6 hours.
 Regards,
 The Admins at BBS List @ SynchronetBBS.org
 END_MESSAGE_BODY
-		my $email = Email::Simple->create(
+		$email = Email::Simple->create(
 		header => [
 		       From => $EMAIL_FROM,
 		       To => $CurNotify,
 		       Subject => $EMAIL_SUBJ,
-		]
+		],
 		body => $CurBody);
 		sendmail($email);
 	}
