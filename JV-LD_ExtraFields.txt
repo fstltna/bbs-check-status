@@ -24,3 +24,4 @@ Last Check Status - type dropdown, options:
         Active
         Unreachable
         -- Disable user edits
+Notifier Email - type email
